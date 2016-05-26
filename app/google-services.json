@@ -1,0 +1,61 @@
+{
+  "project_info": {
+    "project_number": "493631859337",
+    "project_id": "outstanding-map-130523"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493631859337:android:8c94d40a2125d3c0",
+        "android_client_info": {
+          "package_name": "com.sharkawy.zagazigapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCXA_R4Ht7boxn3mEL1-Bk9bQTiFnTcQ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:493631859337:android:72358dc27d5f09cc",
+        "android_client_info": {
+          "package_name": "com.webcraft.ZagazigApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCXA_R4Ht7boxn3mEL1-Bk9bQTiFnTcQ8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
