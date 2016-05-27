@@ -30,12 +30,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GoogleApiAvailability;
 import com.webcraft.ZagazigApp.R;
 import com.webcraft.ZagazigApp.RecyclerItemClickListener;
 import com.webcraft.ZagazigApp.dataModels.Place;
-import com.webcraft.ZagazigApp.gcm.GcmIntentService;
 import com.webcraft.ZagazigApp.utilities.APIConfigure;
 import com.webcraft.ZagazigApp.utilities.AppController;
 import com.webcraft.ZagazigApp.utilities.Config;
@@ -43,13 +40,6 @@ import com.webcraft.ZagazigApp.utilities.Config;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -246,9 +236,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        if (checkPlayServices()) {
-            registerGCM();
-        }
 
         if(sharedpreferences.contains("categories")){
             String jsonString = sharedpreferences.getString("categories",null);
@@ -395,47 +382,15 @@ public class MainActivity extends AppCompatActivity {
             pDialog.dismiss();
     }
 
-    // starting the service to register with GCM
-    private void registerGCM() {
-        Intent intent = new Intent(this, GcmIntentService.class);
-        intent.putExtra("key", "register");
-        startService(intent);
-    }
-
-    private boolean checkPlayServices() {
-        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
-        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (apiAvailability.isUserResolvableError(resultCode)) {
-                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
-                        .show();
-            } else {
-                Log.i(TAG, "This device is not supported. Google Play Services not installed!");
-                Toast.makeText(getApplicationContext(), "This device is not supported. Google Play Services not installed!", Toast.LENGTH_LONG).show();
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        // register GCM registration complete receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.REGISTRATION_COMPLETE));
-
-        // register new push message receiver
-        // by doing this, the activity will be notified each time a new message arrives
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.PUSH_NOTIFICATION));
     }
 
     @Override
     protected void onPause() {
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
 }

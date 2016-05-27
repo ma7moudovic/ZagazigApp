@@ -14,7 +14,6 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -49,7 +48,6 @@ dependencies {
     compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
     compile 'io.realm:realm-android:0.72.0'
     compile 'com.google.code.gson:gson:2.5'
-    compile "com.google.android.gms:play-services-gcm:9.0.0"
     compile('com.crashlytics.sdk.android:crashlytics:2.5.5@aar') {
         transitive = true;
     }
