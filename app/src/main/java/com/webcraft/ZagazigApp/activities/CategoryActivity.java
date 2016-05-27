@@ -312,7 +312,7 @@ public class CategoryActivity extends AppCompatActivity {
                         case 4:
                             if(sharedpreferences.contains(OFFLINECAT4)){
                                 populateData(sharedpreferences.getString(OFFLINECAT4,null));
-                            }
+                            } //
                             break;
                         case 5:
                             if(sharedpreferences.contains(OFFLINECAT5)){
