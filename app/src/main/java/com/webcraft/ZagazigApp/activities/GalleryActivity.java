@@ -35,7 +35,6 @@ public class GalleryActivity extends AppCompatActivity {
 
     private static final String EXTRA_IMAGES_FLAG = "extra_flag";
     private String TAG = MainActivity.class.getSimpleName();
-    private static final String endpoint = "http://api.androidhive.info/json/glide.json";
     private ArrayList<Image> images;
     private ProgressDialog pDialog;
     private ThumbAdapter mAdapter;

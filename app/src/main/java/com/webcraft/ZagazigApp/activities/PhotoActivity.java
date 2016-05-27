@@ -62,11 +62,11 @@ public class PhotoActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
 
         try {
-            if(jsonObject.getJSONArray("imagesPathes").length()==0||jsonObject.getJSONArray("imagesPathes")==null){
+            if(jsonObject.getJSONArray("galleryImagesPaths").length()==0||jsonObject.getJSONArray("galleryImagesPaths")==null){
 
             }else {
-                for (int i = 0; i < jsonObject.getJSONArray("imagesPathes").length(); i++) {
-                    arrayList.add(new Photo(jsonObject.getJSONArray("imagesPathes").getJSONObject(i).getString("path"),jsonObject.getJSONArray("imagesPathes").getJSONObject(i).getString("thumb")));
+                for (int i = 0; i < jsonObject.getJSONArray("galleryImagesPaths").length(); i++) {
+                    arrayList.add(new Photo(jsonObject.getJSONArray("galleryImagesPaths").getJSONObject(i).getString("path"),jsonObject.getJSONArray("galleryImagesPaths").getJSONObject(i).getString("thumb")));
                 }
             }
         } catch (JSONException e) {

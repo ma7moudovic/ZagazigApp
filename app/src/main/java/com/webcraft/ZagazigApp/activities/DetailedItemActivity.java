@@ -54,13 +54,13 @@ public class DetailedItemActivity extends AppCompatActivity {
     String EXTRA_IMAGES_OBJECTS ="extra_object";
     private static final String EXTRA_IMAGES_FLAG = "extra_flag";
     LinearLayout telephone_panel ;
-    TextView title  , desc ,address ,tel ,facebookPage , icon_map , icon_telephone;
+    TextView title  , desc ,address ,tel ,facebookPage , icon_map , icon_telephone,category ,servicetagsString;
     ImageView logo ;
-    RecyclerView recyclerView ;
+//    RecyclerView recyclerView ;
     private LinearListView mTrailersView;
     GallaryAdapter gallaryAdapter ;
     TextView txtView_photos ;
-    List<Tag> tags ;
+//    List<Tag> tags ;
     Place place ;
     boolean exits =false ;
     SharedPreferences sharedpreferences;
@@ -178,7 +178,8 @@ public class DetailedItemActivity extends AppCompatActivity {
 
         txtView_photos = (TextView) findViewById(R.id.txtView_photos);
         title = (TextView) findViewById(R.id.tvtitle);
-//        category = (TextView) findViewById(R.id.tvcat);
+        category = (TextView) findViewById(R.id.tvcat);
+        servicetagsString = (TextView) findViewById(R.id.tvServiceTags);
         desc = (TextView) findViewById(R.id.tvdesc);
         address = (TextView) findViewById(R.id.tvadd);
         tel = (TextView) findViewById(R.id.tvtel);
@@ -190,12 +191,13 @@ public class DetailedItemActivity extends AppCompatActivity {
         icon_map = (TextView) findViewById(R.id.icon_map);
         icon_telephone = (TextView) findViewById(R.id.icon_telephone);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerListview_tags_detailed);
-        tags = new ArrayList<>();
-        TagAdapter tagAdapter = new TagAdapter(this,tags);
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(tagAdapter);
+//        recyclerView = (RecyclerView) findViewById(R.id.recyclerListview_tags_detailed);
+
+//        tags = new ArrayList<>();
+//        TagAdapter tagAdapter = new TagAdapter(this,tags);
+//        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+////        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(tagAdapter);
 
         mTrailersView = (LinearListView) findViewById(R.id.detailed_trailers);
         gallaryAdapter = new GallaryAdapter(this, new ArrayList<Photo>());
@@ -207,8 +209,8 @@ public class DetailedItemActivity extends AppCompatActivity {
 
             place = new Place(jsonObject);
             title.setText(place.getName());
-
-//            category.setText(subcategory[Integer.parseInt(place.getCategoryID())-1]);
+            category.setText(place.getSubCategory_string());
+            servicetagsString.setText(place.getServiceTags_String());
             desc.setText(place.getDesc());
             address.setText(place.getAddress());
             if(place.getTelephone()!=null){
@@ -242,19 +244,23 @@ public class DetailedItemActivity extends AppCompatActivity {
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(logo);
 
-            for (int i = 0; i < place.getObject().getJSONArray("serviceTags").length(); i++) {
-                tags.add(new Tag(place.getObject().getJSONArray("serviceTags").getJSONObject(i)));
-
-                Toast.makeText(DetailedItemActivity.this,tags.get(i).getTag().toString(),Toast.LENGTH_SHORT).show();
-            }
-            tagAdapter.notifyDataSetChanged();
+//            for (int i = 0; i < place.getObject().getJSONArray("serviceTags").length(); i++) {
+//                tags.add(new Tag(place.getObject().getJSONArray("serviceTags").getJSONObject(i)));
+//
+//                Toast.makeText(DetailedItemActivity.this,tags.get(i).getTag().toString(),Toast.LENGTH_SHORT).show();
+//            }
+//            tagAdapter.notifyDataSetChanged();
 //            Toast.makeText(this,"count of pics "+place.getObject().getJSONArray("imagesPathes").length()+"",Toast.LENGTH_SHORT).show();
+            if(place.getObject().getJSONArray("productsImagesPaths").length()==0||place.getObject().getJSONArray("productsImagesPaths")==null){
+                imageButtonMenus.setVisibility(View.GONE);
+            }
+
             if(place.getObject().getJSONArray("imagesPathes").length()==0||place.getObject().getJSONArray("imagesPathes")==null){
                 mTrailersView.setVisibility(View.GONE);
                 txtView_photos.setVisibility(View.GONE);
             }else {
-                for (int i = 0; i < place.getObject().getJSONArray("imagesPathes").length(); i++) {
-                    gallaryAdapter.add(new Photo(place.getObject().getJSONArray("imagesPathes").getJSONObject(i).getString("path"),place.getObject().getJSONArray("imagesPathes").getJSONObject(i).getString("thumb")));
+                for (int i = 0; i < place.getObject().getJSONArray("galleryImagesPaths").length(); i++) {
+                    gallaryAdapter.add(new Photo(place.getObject().getJSONArray("galleryImagesPaths").getJSONObject(i).getString("path"),place.getObject().getJSONArray("galleryImagesPaths").getJSONObject(i).getString("thumb")));
                 }
             }
 

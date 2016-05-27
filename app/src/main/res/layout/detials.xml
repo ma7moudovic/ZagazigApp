@@ -68,21 +68,6 @@
 
                             android:text="Dabour" />
                     </LinearLayout>
-                    <!--<TextView-->
-                    <!--android:id="@+id/tvtxt1"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_below="@+id/tvcat"-->
-                    <!--android:layout_marginTop="8dp"-->
-                    <!--android:layout_toEndOf="@+id/photo"-->
-                    <!--android:layout_toRightOf="@+id/photo"-->
-                    <!--android:background="@drawable/custombackground"-->
-                    <!--android:paddingBottom="3dp"-->
-                    <!--android:paddingLeft="15dp"-->
-                    <!--android:paddingRight="15dp"-->
-                    <!--android:paddingTop="3dp"-->
-                    <!--android:text="type" />-->
-
 
                 </RelativeLayout>
 
@@ -116,14 +101,22 @@
                         android:text="الخدمات"
                         android:textSize="30sp" />
 
-                    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/recyclerListview_tags_detailed"
+                    <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="100dp"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tvServiceTags"
+                        android:layout_centerVertical="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_below="@+id/tvvv"
-                        card_view:cardBackgroundColor="@android:color/transparent"
-                        card_view:cardElevation="0dp" />
+                        />
+                    <!--<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"-->
+                        <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+                        <!--android:id="@+id/recyclerListview_tags_detailed"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="100dp"-->
+                        <!--android:layout_below="@+id/tvvv"-->
+                        <!--card_view:cardBackgroundColor="@android:color/transparent"-->
+                        <!--card_view:cardElevation="0dp" />-->
                 </RelativeLayout>
 
             </RelativeLayout>

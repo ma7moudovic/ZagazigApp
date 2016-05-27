@@ -91,6 +91,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.titleView.setText(pObjects.get(position).getName());
         holder.descView.setText(pObjects.get(position).getDesc());
+        holder.subCatString.setText(pObjects.get(position).getSubCategory_string());
 //        holder.descView.setText(pObjects.get(position).getDesc());
 //        holder.tab1.setText(pObjects.get(position).getTag());
 //        Picasso.with(getpContext()).load("http://mashaly.net/" +"places_imgs//icons//29.jpg").into(holder.imageView);
@@ -138,7 +139,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         protected ImageView imageView;
         protected TextView titleView;
         protected TextView descView;
-        protected TextView tab1 ;
+        protected TextView subCatString ;
 //        protected RecyclerView recyclerView ;
 
         public ViewHolder(View itemView) {
@@ -147,57 +148,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
             imageView = (ImageView) itemView.findViewById(R.id.photo);
             titleView = (TextView) itemView.findViewById(R.id.tvtitle);
             descView = (TextView) itemView.findViewById(R.id.tvdesc);
-//            tab1 = (TextView) itemView.findViewById(R.id.tvtxt1);
+            subCatString = (TextView) itemView.findViewById(R.id.tvsubCatString);
 //            recyclerView = (RecyclerView) itemView.findViewById(R.id.recyclerListview_tags);
         }
 
     }//holder
-/**
-    private void ImageHandler(final String URL , final ImageView imageV) {
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/ZagApp/"+URL.replace("/","_"));
-        if (myDir.exists()) {
-            // Do Whatever you want sdcard exists
-            Bitmap bitmap1 = BitmapFactory.decodeFile(myDir.getAbsolutePath());
-            imageV.setImageBitmap(bitmap1);
-        }
-        else{
-//            Toast.makeText(getContext(), "not Exists", Toast.LENGTH_SHORT).show();
-            Picasso.with(getpContext()).load("http://176.32.230.50/zagapp.com/"+URL).into(new Target() {
-                @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    try {
-                        String root = Environment.getExternalStorageDirectory().toString();
-                        File myDir = new File(root + "/ZagApp");
-                        if (!myDir.exists()) {
-                            myDir.mkdirs();
-                        }
-//                    String name = new Date().toString() + ".jpg";
-                        String name = URL.replace("/","_");
 
-                        myDir = new File(myDir, name);
-                        FileOutputStream out = new FileOutputStream(myDir);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                        out.flush();
-                        out.close();
-//                        Toast.makeText(getpContext(), "imageDownloaded", Toast.LENGTH_SHORT).show();
-                        imageV.setImageBitmap(bitmap);
-
-                    } catch (Exception e) {
-//                        Toast.makeText(getpContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    }
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-                }
-
-                @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
-                }
-            });
-        }
-    }
-    */
 }

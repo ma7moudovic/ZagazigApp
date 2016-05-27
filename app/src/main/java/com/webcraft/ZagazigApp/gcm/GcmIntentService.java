@@ -218,7 +218,7 @@ public class GcmIntentService extends IntentService {
             public void onResponse(JSONObject response) {
                 Log.d(TAG, response.toString());
                 // Parsing json object response
-                Toast.makeText(GcmIntentService.this,response.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(GcmIntentService.this,response.toString(), Toast.LENGTH_LONG).show();
 
             }
         }, new Response.ErrorListener() {
@@ -232,12 +232,12 @@ public class GcmIntentService extends IntentService {
                 try {
                     responseBody = new String( error.networkResponse.data, "utf-8" );
                     jsonObject = new JSONObject( responseBody );
-                    Toast.makeText(GcmIntentService.this,"error " + jsonObject.toString(),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(GcmIntentService.this,"error " + jsonObject.toString(),Toast.LENGTH_LONG).show();
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(GcmIntentService.this,e.getMessage(),Toast.LENGTH_LONG).show();
-                    Toast.makeText(GcmIntentService.this,"Connection Error.",Toast.LENGTH_LONG).show();
+//                    Toast.makeText(GcmIntentService.this,e.getMessage(),Toast.LENGTH_LONG).show();
+//                    Toast.makeText(GcmIntentService.this,"Connection Error.",Toast.LENGTH_LONG).show();
                 }
             }
         });

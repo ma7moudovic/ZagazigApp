@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
@@ -44,6 +45,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -229,17 +231,17 @@ public class MainActivity extends AppCompatActivity {
                     // now subscribe to `global` topic to receive app wide notifications
                     String token = intent.getStringExtra("token");
 
-                    Toast.makeText(getApplicationContext(), "GCM registration token: " + token, Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "GCM registration token: " + token, Toast.LENGTH_LONG).show();
 
                 } else if (intent.getAction().equals(Config.SENT_TOKEN_TO_SERVER)) {
                     // gcm registration id is stored in our server's MySQL
 
-                    Toast.makeText(getApplicationContext(), "GCM registration token is stored in server!", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "GCM registration token is stored in server!", Toast.LENGTH_LONG).show();
 
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // new push notification is received
 
-                    Toast.makeText(getApplicationContext(), "Push notification is received!", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(getApplicationContext(), "Push notification is received!", Toast.LENGTH_LONG).show();
                 }
             }
         };
@@ -263,16 +265,12 @@ public class MainActivity extends AppCompatActivity {
         if (search_input.getText().length() != 0) {
             if (s1.getSelectedItemPosition() == 0) {
                 url = APIConfigure.API_DOMAIN + APIConfigure.API_SEARCH_PATH + "name=" + search_input.getText().toString().replace(" ", "%20");
+//                url = APIConfigure.API_DOMAIN + APIConfigure.API_SEARCH_PATH + "name=عربى";
             } else {
                 url = APIConfigure.API_DOMAIN + APIConfigure.API_SEARCH_PATH + "area=" + s1.getSelectedItemPosition() + "&name=" + search_input.getText().toString().replace(" ", "%20");
             }
-            String URL = null;
-            try {
-                URL = URLDecoder.decode(URLEncoder.encode(url, "iso8859-1"), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-            makeJsonObjectRequest(url);
+
+            makeJsonObjectRequest(Uri.encode(url, "UTF-8"));
         }
     }
 
@@ -347,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, response.toString());
                 // Parsing json object response
                 hidepDialog();
-                Toast.makeText(MainActivity.this,response.toString(), Toast.LENGTH_LONG).show();
+//                Toast.makeText(MainActivity.this,response.toString(), Toast.LENGTH_LONG).show();
                 try {
 
 //                        Toast.makeText(MainActivity.this,response.toString(), Toast.LENGTH_LONG).show();

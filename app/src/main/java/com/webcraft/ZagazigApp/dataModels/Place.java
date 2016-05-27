@@ -24,6 +24,9 @@ public class Place {
     private JSONObject object ;
     private JSONArray serviceTags ;
     String lat , lng ;
+    private String serviceTags_String ;
+    private String subCategory_string;
+
     public Place() {
     }
 
@@ -42,6 +45,9 @@ public class Place {
             this.lat= object.getString("latitude");
             this.lng = object.getString("longitude");
             this.fbPageURL=object.getString("facebookLink");
+            this.subCategory_string = object.getString("subCategory_string");
+            this.serviceTags_String = object.getString("serviceTags_String");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -165,5 +171,25 @@ public class Place {
 
     public String getFbPageURL() {
         return fbPageURL;
+    }
+
+    public void setSubCategory_string(String subCategory_string) {
+        this.subCategory_string = subCategory_string;
+    }
+
+    public void setServiceTags_String(String serviceTags_String) {
+        this.serviceTags_String = serviceTags_String;
+    }
+
+    public String getImageThumbURL() {
+        return imageThumbURL;
+    }
+
+    public String getServiceTags_String() {
+        return serviceTags_String;
+    }
+
+    public String getSubCategory_string() {
+        return subCategory_string;
     }
 }
