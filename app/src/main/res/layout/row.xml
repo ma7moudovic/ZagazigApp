@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="right"
         android:background="@drawable/new_layer"
         android:gravity="right"
@@ -51,15 +51,12 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvtitle"
             android:layout_toLeftOf="@+id/photo"
+            android:layout_toStartOf="@+id/photo"
+            android:gravity="right"
+            android:maxLength="60"
             android:text="اكل سورى" />
 
-        <TextView
-            android:id="@+id/tvsubCatString"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvdesc"
-            android:layout_toLeftOf="@+id/photo"
-            android:text="اكل سورى" />
+<<<<<<< HEAD
         <!--<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"-->
             <!--xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
             <!--android:id="@+id/recyclerListview_tags"-->
@@ -71,6 +68,26 @@
             <!--card_view:cardBackgroundColor="@android:color/transparent"-->
             <!--card_view:cardElevation="0dp" />-->
         <!--/>-->
+=======
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvdesc"
+            android:layout_marginTop="10dp"
+            android:layout_toLeftOf="@+id/photo"
+            android:layout_toStartOf="@+id/photo"
+            android:gravity="right">
+
+            <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/recyclerListview_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+
+                card_view:cardBackgroundColor="@android:color/transparent"
+                card_view:cardElevation="0dp" />
+        </RelativeLayout>
+>>>>>>> 6c58957... Dabour
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

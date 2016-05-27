@@ -6,7 +6,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -33,10 +33,10 @@
 
                     <ImageView
                         android:id="@+id/photo"
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:layout_alignParentEnd="true"
+                        android:layout_width="140dp"
+                        android:layout_height="140dp"
                         android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="16dp"
                         android:layout_marginStart="16dp"
@@ -44,31 +44,30 @@
                         android:src="@mipmap/ic_launcher" />
 
 
-                    <TextView
-                        android:id="@+id/tvtitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_gravity="right"
-                        android:layout_toLeftOf="@+id/photo"
-                        android:layout_toStartOf="@+id/photo"
-                        android:gravity="right"
-                        android:layout_toRightOf="@+id/btnmenu"
-                        android:layout_toEndOf="@+id/btnmenu"
-                        android:text="Karim"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:gravity="right"
+                            android:text="Karim"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/photo"
+                            android:layout_toStartOf="@+id/photo"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
 
                     <ImageButton
                         android:id="@+id/btnmenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
 
+                        android:background="@null"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
                         android:layout_centerVertical="true"
-                        android:background="@null"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/food" />
 
@@ -117,9 +116,6 @@
 
             </RelativeLayout>
 
-<<<<<<< HEAD
-            <LinearLayout
-=======
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -127,15 +123,13 @@
 
 
             <RelativeLayout
->>>>>>> 6c58957... Dabour
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:background="@drawable/new_layer"
                 android:gravity="right"
                 android:orientation="vertical"
-                android:padding="7dp"
-                android:id="@+id/telephone_panel">
+                android:padding="7dp">
 
                 <RelativeLayout
                     android:id="@+id/linwasf"
@@ -173,35 +167,16 @@
                 <LinearLayout
                     android:id="@+id/lin11"
                     android:layout_width="fill_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:layout_below="@+id/linwasf"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="#8c8f8f"
                     android:orientation="horizontal"></LinearLayout>
 
-<<<<<<< HEAD
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="10dp"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@mipmap/address"
-                    android:gravity="right|center"
-                    android:text="العنوان"
-                    android:textSize="24sp"
-                    android:id="@+id/icon_map"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvadd"
-                    android:layout_width="wrap_content"
-=======
                 <RelativeLayout
                     android:id="@+id/linadd"
                     android:layout_width="match_parent"
->>>>>>> 6c58957... Dabour
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lin11">
 
@@ -252,33 +227,15 @@
                 <LinearLayout
                     android:id="@+id/lin22"
                     android:layout_width="fill_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:layout_below="@+id/linadd"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
                     android:background="#8c8f8f"
                     android:orientation="horizontal"></LinearLayout>
 
-<<<<<<< HEAD
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="10dp"
-                    android:drawablePadding="0dp"
-                    android:drawableRight="@mipmap/phone"
-                    android:gravity="right|center"
-                    android:text="الهاتف"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:id="@+id/icon_telephone"/>
-
-                <TextView
-                    android:id="@+id/tvtel"
-=======
                 <RelativeLayout
                     android:id="@+id/linphone"
->>>>>>> 6c58957... Dabour
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lin22"
@@ -331,7 +288,7 @@
                 <LinearLayout
                     android:id="@+id/lin33"
                     android:layout_width="fill_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:layout_below="@+id/linphone"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="10dp"
@@ -344,7 +301,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lin33"
-                    android:gravity="right">
+                    android:gravity="right|center">
 
                     <TextView
                         android:id="@+id/fbPage"
@@ -376,7 +333,7 @@
                 <LinearLayout
                     android:id="@+id/lin44"
                     android:layout_width="fill_parent"
-                    android:layout_height="1dp"
+                    android:layout_height="2dp"
                     android:layout_below="@+id/linfb"
                     android:layout_marginBottom="10dp"
 
