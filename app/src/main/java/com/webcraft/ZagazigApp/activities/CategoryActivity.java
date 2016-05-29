@@ -46,7 +46,8 @@ public class CategoryActivity extends AppCompatActivity {
     RecyclerView recyclerView ;
     SearchResultAdapter adapter ;
     RecyclerView.LayoutManager layoutManager ;
-    private List<Place> list = new ArrayList<>();
+    ArrayList<Place> list = new ArrayList<>();
+    ArrayList<Place>holder = new ArrayList<>();
 
     SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -306,12 +307,14 @@ public class CategoryActivity extends AppCompatActivity {
                             list.clear();
                         }
 
-                        Toast.makeText(CategoryActivity.this,list.size()+" item befor", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(CategoryActivity.this,holder.size()+" item before", Toast.LENGTH_LONG).show();
                         for(int i =0 ;i<data.length();i++){
-                            adapter.add(new Place(data.getJSONObject(i)));
+//                            adapter.add(new Place(data.getJSONObject(i)));
 //                            list.add(0,new Place(data.getJSONObject(i)));
+                            holder.add(0,new Place(data.getJSONObject(i)));
                         }
-                        Toast.makeText(CategoryActivity.this,list.size()+" item after", Toast.LENGTH_LONG).show();
+                        list.addAll(holder);
+//                        Toast.makeText(CategoryActivity.this,holder.size()+" item after", Toast.LENGTH_LONG).show();
                         adapter.notifyDataSetChanged();
 
                         URL_NEXT_PAGE = response.getString("next_page_url");
