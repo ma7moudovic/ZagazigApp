@@ -58,12 +58,17 @@
                         android:text="Karim"
                         android:textSize="30sp"
                         android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="subcat"
+                        android:layout_alignParentBottom="true"
+                        android:id="@+id/tvcat"/>
 
                     <ImageButton
                         android:id="@+id/btnmenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
@@ -105,21 +110,15 @@
                         android:text="الخدمات"
                         android:textSize="30sp" />
 
-                    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-                        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/recyclerListview_tags_detailed"
+                    <TextView
+                       android:id="@+id/tvServiceTags"
                         android:layout_width="wrap_content"
-                        android:layout_height="100dp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/tvvv"
-                        card_view:cardBackgroundColor="@android:color/transparent"
-                        card_view:cardElevation="0dp" />
+                       />
                 </RelativeLayout>
 
             </RelativeLayout>
-
-<<<<<<< HEAD
-            <LinearLayout
-=======
 
             <LinearLayout
                 android:layout_width="fill_parent"
@@ -127,7 +126,6 @@
 
 
             <RelativeLayout
->>>>>>> 6c58957... Dabour
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -180,28 +178,9 @@
                     android:background="#8c8f8f"
                     android:orientation="horizontal"></LinearLayout>
 
-<<<<<<< HEAD
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="10dp"
-                    android:drawablePadding="5dp"
-                    android:drawableRight="@mipmap/address"
-                    android:gravity="right|center"
-                    android:text="العنوان"
-                    android:textSize="24sp"
-                    android:id="@+id/icon_map"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvadd"
-                    android:layout_width="wrap_content"
-=======
                 <RelativeLayout
                     android:id="@+id/linadd"
                     android:layout_width="match_parent"
->>>>>>> 6c58957... Dabour
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lin11">
 
@@ -259,26 +238,8 @@
                     android:background="#8c8f8f"
                     android:orientation="horizontal"></LinearLayout>
 
-<<<<<<< HEAD
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="10dp"
-                    android:drawablePadding="0dp"
-                    android:drawableRight="@mipmap/phone"
-                    android:gravity="right|center"
-                    android:text="الهاتف"
-                    android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:id="@+id/icon_telephone"/>
-
-                <TextView
-                    android:id="@+id/tvtel"
-=======
                 <RelativeLayout
                     android:id="@+id/linphone"
->>>>>>> 6c58957... Dabour
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/lin22"
@@ -297,7 +258,6 @@
                         android:layout_toStartOf="@+id/adddd"
                         android:gravity="right"
                         android:text="0123456789"
-
                         android:textSize="24sp" />
 
                     <TextView
@@ -312,7 +272,6 @@
                         android:gravity="right"
                         android:text="الهاتف : "
                         android:textSize="24sp"
-
                         android:textStyle="bold" />
 
 

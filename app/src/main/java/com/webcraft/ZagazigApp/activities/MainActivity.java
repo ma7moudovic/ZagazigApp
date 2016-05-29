@@ -1,8 +1,10 @@
 package com.webcraft.ZagazigApp.activities;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -15,6 +17,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -257,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
                 url = APIConfigure.API_DOMAIN + APIConfigure.API_SEARCH_PATH + "area=" + s1.getSelectedItemPosition() + "&name=" + search_input.getText().toString().replace(" ", "%20");
             }
 
-            makeJsonObjectRequest(Uri.encode(url, "UTF-8"));
+            makeJsonObjectRequest(url);
         }
     }
 
@@ -392,5 +396,41 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+//        boolean ico = item.getIcon().equals(R.drawable.abc_btn_rating_star_on_mtrl_alpha );
+        switch (id){
+            case R.id.action_contactUs:
+                final AlertDialog aboutDialog = new AlertDialog.Builder(this).create();
+                aboutDialog.setTitle(R.string.app_name);
+                aboutDialog.setMessage("(الزقازيق على موبايك)  \n" +
+                        "  إدارة شركة فوريو للدعاية و الاعلان \n" +
+                        "م/ محمد بهنس  01092822438\n" +
+                        "م/ محمد لبيب.  01090250076\n" +
+                        "تنفيذ شركة webcraft \n" +
+                        "01009606093\n" +
+                        "sales@webcraft.ae"); // a message above the buttons
+                aboutDialog.setIcon(R.mipmap.ic_launcher); // the icon besides the title you have to change it to the icon/image you have.
+                aboutDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) { // here you can add a method  to the button clicked. you can create another button just by copying alertDialog.setButton("okay")
+                        aboutDialog.dismiss();
+                    }
+
+                });
+                aboutDialog.show();
+
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

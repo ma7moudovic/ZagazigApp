@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +27,7 @@ import com.webcraft.ZagazigApp.R;
 import com.webcraft.ZagazigApp.RecyclerItemClickListener;
 import com.webcraft.ZagazigApp.adapters.SearchResultAdapter;
 import com.webcraft.ZagazigApp.dataModels.Place;
+import com.webcraft.ZagazigApp.dataModels.SubCategory;
 import com.webcraft.ZagazigApp.utilities.APIConfigure;
 import com.webcraft.ZagazigApp.utilities.AppController;
 
@@ -44,7 +46,9 @@ public class CategoryActivity extends AppCompatActivity {
     RecyclerView recyclerView ;
     SearchResultAdapter adapter ;
     RecyclerView.LayoutManager layoutManager ;
-    private List<Place> list;
+    private List<Place> list = new ArrayList<>();
+
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
     String URL ,area,sub_cat;
     int index ;
@@ -60,7 +64,12 @@ public class CategoryActivity extends AppCompatActivity {
     public static final String OFFLINECAT5="cat5";
 
     ArrayList<String> subcategory = new ArrayList<>();
+    ArrayList<SubCategory> subs = new ArrayList<>();
+
     ArrayAdapter<String> tagsAdapter ;
+    String URL_NEXT_PAGE ="";
+    String URL_PREV_PAGE ="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +80,8 @@ public class CategoryActivity extends AppCompatActivity {
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
+
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
 
         category_bk = (RelativeLayout) findViewById(R.id.category_bk);
         index = getIntent().getExtras().getInt("cat_index");
@@ -135,7 +146,6 @@ public class CategoryActivity extends AppCompatActivity {
         sp_tags= (Spinner) findViewById(R.id.sp_subCats);
         sp_tags.setAdapter(tagsAdapter);
 
-        list= new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerListview_category);
         layoutManager=new LinearLayoutManager(this);
         adapter=new SearchResultAdapter(this,list);
@@ -154,11 +164,12 @@ public class CategoryActivity extends AppCompatActivity {
                 if(position!=0){
                     isFirstTime=false;
                     area=position+"";
+
                 }else {
                     area="";
                 }
                 if(!isFirstTime){
-                    makeJsonObjectRequest();
+                    makeJsonObjectRequest(URL,true);
                 }
             }
 
@@ -173,13 +184,16 @@ public class CategoryActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position!=0){
                     isFirstTime=false;
-                    sub_cat = position+"";
+//                    sub_cat = position+"";
+                    sub_cat = subs.get(position).getId();
+                    //here
+
                 }else {
                     sub_cat="";
                 }
 
                 if(!isFirstTime){
-                    makeJsonObjectRequest();
+                    makeJsonObjectRequest(URL,true);
                 }
             }
 
@@ -200,24 +214,57 @@ public class CategoryActivity extends AppCompatActivity {
 
                 })
         );
-        makeJsonObjectRequest();
 
-    }
-
-    private void makeJsonObjectRequest() {
         if(index==11){
             index=1;
             URL = APIConfigure.API_DOMAIN+APIConfigure.API_SEARCH_PATH+"category="+index+"&area="+area+ "&sub_category="+sub_cat;
         }else {
             URL = APIConfigure.API_DOMAIN+APIConfigure.API_SEARCH_PATH+"category="+index+"&area="+area+ "&sub_category="+sub_cat;
         }
+        makeJsonObjectRequest(URL,true);
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if(URL_NEXT_PAGE.equals("null")) {
+                    Toast.makeText(CategoryActivity.this, "There is no more items to show.", Toast.LENGTH_LONG).show();
+                    if(mSwipeRefreshLayout.isRefreshing()){
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        return ;
+                    }
+                }else if(URL_NEXT_PAGE.length()>4){
+                    makeJsonObjectRequest(URL+URL_NEXT_PAGE,false);
+                }else if(URL_NEXT_PAGE.equals("")){
+                    makeJsonObjectRequest(URL,true);
+                }else {
+                    Toast.makeText(CategoryActivity.this, "3rd", Toast.LENGTH_LONG).show();
+                    if(mSwipeRefreshLayout.isRefreshing()){
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        return ;
+                    }
+                }
+
+            }
+        });
+        mSwipeRefreshLayout.setColorSchemeResources(
+                android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light
+        );
+
+    }
+
+    private void makeJsonObjectRequest(String url,final boolean clear) {
 
         String tmp_url = "http://176.32.230.50/zagapp.com/handler.php?action=search&name=";
-//        Toast.makeText(CategoryActivity.this,URL, Toast.LENGTH_LONG).show();
 
-        showpDialog();
+        if(!mSwipeRefreshLayout.isRefreshing()){
+            showpDialog();
+        }
+
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                URL, null, new Response.Listener<JSONObject>() {
+                url, null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
@@ -226,17 +273,13 @@ public class CategoryActivity extends AppCompatActivity {
                 hidepDialog();
                 adapter.clear();
                 try {
-//                    Toast.makeText(CategoryActivity.this,response.getString("message").toString(), Toast.LENGTH_LONG).show();
-                    if(response.getString("message").toString().equals("sucess")){
-
-//                        Toast.makeText(CategoryActivity.this, response.toString(), Toast.LENGTH_LONG).show();
-                        JSONArray data = response.getJSONArray("data");
-
-                    }else if(response.getString("message").toString().equals("no data recived")){
+                    if(response.getString("message").toString().equals("no data recived")){
                         Toast.makeText(CategoryActivity.this,"no places with this name", Toast.LENGTH_LONG).show();
 
                     }else if(response.getString("message").toString().equals("success")){
-
+                        if(mSwipeRefreshLayout.isRefreshing()){
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        }
                         switch (index){
                             case 1:
                                 editor.putString(OFFLINECAT1,response.toString());
@@ -259,11 +302,20 @@ public class CategoryActivity extends AppCompatActivity {
                         editor.commit();
                         JSONArray data = response.getJSONArray("data");
 //                        Toast.makeText(CategoryActivity.this, data.toString(), Toast.LENGTH_LONG).show();
-                        adapter.clear();
+                        if(clear){
+                            list.clear();
+                        }
+
+                        Toast.makeText(CategoryActivity.this,list.size()+" item befor", Toast.LENGTH_LONG).show();
                         for(int i =0 ;i<data.length();i++){
                             adapter.add(new Place(data.getJSONObject(i)));
-//                            Toast.makeText(CategoryActivity.this,data.getJSONObject(i).getString("icoImage"), Toast.LENGTH_LONG).show();
+//                            list.add(0,new Place(data.getJSONObject(i)));
                         }
+                        Toast.makeText(CategoryActivity.this,list.size()+" item after", Toast.LENGTH_LONG).show();
+                        adapter.notifyDataSetChanged();
+
+                        URL_NEXT_PAGE = response.getString("next_page_url");
+                        URL_PREV_PAGE = response.getString("prev_page_url");
 
                     }
                     else{
@@ -282,7 +334,9 @@ public class CategoryActivity extends AppCompatActivity {
                 VolleyLog.d(TAG, "Error: " + error.getMessage());
                 // hide the progress dialog
                 hidepDialog();
-
+                if(mSwipeRefreshLayout.isRefreshing()){
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
                 String responseBody = null;
                 JSONObject jsonObject=null ;
                 try {
@@ -341,6 +395,7 @@ public class CategoryActivity extends AppCompatActivity {
                     JSONArray subCategories = cat.getJSONArray("subCategories");
                     for(int i = 0 ;i<subCategories.length();i++){
                         subcategory.add(subCategories.getJSONObject(i).getString("description"));
+                        subs.add(new SubCategory(subCategories.getJSONObject(i)));
                         tagsAdapter.notifyDataSetChanged();
                     }
 

@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import com.linearlistview.LinearListView;
 import com.webcraft.ZagazigApp.R;
 import com.webcraft.ZagazigApp.adapters.GallaryAdapter;
 import com.webcraft.ZagazigApp.adapters.TagAdapter;
+import com.webcraft.ZagazigApp.dataModels.Image;
 import com.webcraft.ZagazigApp.dataModels.Photo;
 import com.webcraft.ZagazigApp.dataModels.Place;
 import com.webcraft.ZagazigApp.dataModels.Tag;
@@ -53,9 +55,9 @@ public class DetailedItemActivity extends AppCompatActivity {
     String EXTRA_IMAGE ="extra_image";
     String EXTRA_IMAGES_OBJECTS ="extra_object";
     private static final String EXTRA_IMAGES_FLAG = "extra_flag";
-    LinearLayout telephone_panel ;
-    TextView title  , desc ,address ,tel ,facebookPage , icon_map , icon_telephone,category ,servicetagsString;
-    ImageView logo ;
+    RelativeLayout telephone_panel ;
+    TextView title  , desc ,address ,tel ,facebookPage ,category ,servicetagsString;
+    ImageView logo , icon_map , icon_telephone ;
 //    RecyclerView recyclerView ;
     private LinearListView mTrailersView;
     GallaryAdapter gallaryAdapter ;
@@ -187,9 +189,9 @@ public class DetailedItemActivity extends AppCompatActivity {
         facebookPage = (TextView) findViewById(R.id.fbPage);
         imageButtonGallery = (ImageButton) findViewById(R.id.btngallary);
         imageButtonMenus = (ImageButton) findViewById(R.id.btnmenu);
-        telephone_panel = (LinearLayout) findViewById(R.id.telephone_panel);
-        icon_map = (TextView) findViewById(R.id.icon_map);
-        icon_telephone = (TextView) findViewById(R.id.icon_telephone);
+        telephone_panel = (RelativeLayout)findViewById(R.id.linphone);
+        icon_map = (ImageView) findViewById(R.id.imgadd);
+        icon_telephone = (ImageView) findViewById(R.id.imgcall);
 
 //        recyclerView = (RecyclerView) findViewById(R.id.recyclerListview_tags_detailed);
 

@@ -35,7 +35,7 @@ public class Splash extends AppCompatActivity {
                 try {
                     synchronized (this) {
                         // Wait given period of time or exit on touch
-                        wait(5000);
+                        wait(2000);
                     }
                 } catch (InterruptedException ex) {
                 }

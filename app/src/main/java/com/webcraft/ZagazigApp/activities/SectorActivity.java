@@ -22,6 +22,7 @@ import com.webcraft.ZagazigApp.adapters.AnnonuceAdapter;
 import com.webcraft.ZagazigApp.adapters.SearchResultAdapter;
 import com.webcraft.ZagazigApp.dataModels.Annonce;
 import com.webcraft.ZagazigApp.dataModels.Place;
+import com.webcraft.ZagazigApp.utilities.APIConfigure;
 import com.webcraft.ZagazigApp.utilities.AppController;
 
 import org.json.JSONArray;
@@ -61,13 +62,13 @@ public class SectorActivity extends AppCompatActivity {
         recyclerView.setAdapter(annonuceAdapter);
 
         if(getIntent().getExtras().getInt("type")==2){
-            url="http://176.32.230.50/zagapp.com/handler.php?action=announce&type=offer";
+            url= APIConfigure.API_DOMAIN+APIConfigure.API_SECTOR_PATH+"offer";
             getSupportActionBar().setTitle("عروض");
         }else if(getIntent().getExtras().getInt("type")==3){
-            url="http://176.32.230.50/zagapp.com/handler.php?action=announce&type=job";
+            url=APIConfigure.API_DOMAIN+APIConfigure.API_SECTOR_PATH+"job";
             getSupportActionBar().setTitle("وظائف");
         }else if(getIntent().getExtras().getInt("type")==4){
-            url="http://176.32.230.50/zagapp.com/handler.php?action=announce&type=course";
+            url=APIConfigure.API_DOMAIN+APIConfigure.API_SECTOR_PATH+"course";
             getSupportActionBar().setTitle("كورسات");
         }
 
