@@ -373,7 +373,6 @@ public class DetailedItemActivity extends AppCompatActivity {
         }
         return new Intent(Intent.ACTION_VIEW, uri);
     }
-
     private void call(String num) {
         Intent in=new Intent(Intent.ACTION_DIAL,Uri.fromParts("tel",num,null));
         try{

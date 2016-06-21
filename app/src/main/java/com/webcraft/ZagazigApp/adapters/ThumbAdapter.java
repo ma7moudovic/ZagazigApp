@@ -51,6 +51,7 @@ public class ThumbAdapter extends RecyclerView.Adapter<ThumbAdapter.MyViewHolder
     public int getItemCount() {
         return images.size();
     }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView thumbnail;
 

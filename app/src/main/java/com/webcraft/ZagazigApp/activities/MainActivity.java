@@ -234,7 +234,6 @@ public class MainActivity extends AppCompatActivity {
 
                 } else if (intent.getAction().equals(Config.PUSH_NOTIFICATION)) {
                     // new push notification is received
-
 //                    Toast.makeText(getApplicationContext(), "Push notification is received!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -315,7 +314,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(MainActivity.this, "Connection Error.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,R.string.connection_error_msg, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -324,7 +323,6 @@ public class MainActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(jsonObjReq);
 
     }
-
     private void makeConfigureRequest() {
 //        showpDialog();
 //                        Toast.makeText(MainActivity.this,URL,Toast.LENGTH_LONG).show();
@@ -366,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(MainActivity.this, "Connection Error.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,R.string.connection_error_msg, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -375,12 +373,10 @@ public class MainActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(jsonObjReq);
 
     }
-
     private void showpDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
-
     private void hidepDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
@@ -392,12 +388,10 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
     }
-
     @Override
     protected void onPause() {
         super.onPause();
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);

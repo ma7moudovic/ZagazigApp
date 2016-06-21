@@ -126,7 +126,7 @@ public class SectorActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(SectorActivity.this,"Connection Error.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(SectorActivity.this,R.string.connection_error_msg,Toast.LENGTH_LONG).show();
                 }
             }
         });

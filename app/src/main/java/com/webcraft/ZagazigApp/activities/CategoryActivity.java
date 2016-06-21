@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -40,6 +41,7 @@ import java.util.List;
 
 public class CategoryActivity extends AppCompatActivity {
 
+    TextView swipeText ;
     Spinner sp_areas , sp_tags;
     ProgressDialog pDialog ;
     private static String TAG = CategoryActivity.class.getSimpleName();
@@ -83,6 +85,9 @@ public class CategoryActivity extends AppCompatActivity {
         editor = sharedpreferences.edit();
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh_layout);
+
+        swipeText = (TextView) findViewById(R.id.swipeText);
+        swipeText.setVisibility(View.INVISIBLE);
 
         category_bk = (RelativeLayout) findViewById(R.id.category_bk);
         index = getIntent().getExtras().getInt("cat_index");
@@ -187,14 +192,15 @@ public class CategoryActivity extends AppCompatActivity {
                     isFirstTime=false;
 //                    sub_cat = position+"";
                     sub_cat = subs.get(position).getId();
-                    //here
+//                    Toast.makeText(CategoryActivity.this,sub_cat + " id of that item ", Toast.LENGTH_LONG).show();
 
                 }else {
                     sub_cat="";
                 }
 
                 if(!isFirstTime){
-                    makeJsonObjectRequest(URL,true);
+                    sub_cat = subs.get(position).getId();
+                    makeJsonObjectRequest(URL+sub_cat,true);
                 }
             }
 
@@ -257,8 +263,7 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void makeJsonObjectRequest(String url,final boolean clear) {
-
-        String tmp_url = "http://176.32.230.50/zagapp.com/handler.php?action=search&name=";
+//        Toast.makeText(CategoryActivity.this,url, Toast.LENGTH_LONG).show();
 
         if(!mSwipeRefreshLayout.isRefreshing()){
             showpDialog();
@@ -278,34 +283,62 @@ public class CategoryActivity extends AppCompatActivity {
                         Toast.makeText(CategoryActivity.this,"no places with this name", Toast.LENGTH_LONG).show();
 
                     }else if(response.getString("message").toString().equals("success")){
+                        swipeText.setVisibility(View.VISIBLE);
                         if(mSwipeRefreshLayout.isRefreshing()){
                             mSwipeRefreshLayout.setRefreshing(false);
                         }
-                        switch (index){
-                            case 1:
-                                editor.putString(OFFLINECAT1,response.toString());
-                                break;
-                            case 2:
-                                editor.putString(OFFLINECAT2,response.toString());
-                                break;
-                            case 3:
-                                editor.putString(OFFLINECAT3,response.toString());
-                                break;
-                            case 4:
-                                editor.putString(OFFLINECAT4,response.toString());
-                                break;
-                            case 5:
-                                editor.putString(OFFLINECAT5,response.toString());
-                                break;
-                            default:
-                                break;
-                        }
-                        editor.commit();
                         JSONArray data = response.getJSONArray("data");
-//                        Toast.makeText(CategoryActivity.this, data.toString(), Toast.LENGTH_LONG).show();
                         if(clear){
                             list.clear();
+                            holder.clear();
+                            switch (index){
+                                case 1:
+                                    editor.putString(OFFLINECAT1,data.toString());
+                                    break;
+                                case 2:
+                                    editor.putString(OFFLINECAT2,data.toString());
+                                    break;
+                                case 3:
+                                    editor.putString(OFFLINECAT3,data.toString());
+                                    break;
+                                case 4:
+                                    editor.putString(OFFLINECAT4,data.toString());
+                                    break;
+                                case 5:
+                                    editor.putString(OFFLINECAT5,data.toString());
+                                    break;
+                                default:
+                                    break;
+                            }
+                            editor.commit();
+                        }else {
+                            switch (index){
+                                case 1:
+                                    //make method to append
+//                                    getSharedData(OFFLINECAT1);
+//                                    concatArray(getSharedData(OFFLINECAT1),data);
+                                    editor.putString(OFFLINECAT1,concatArray(getSharedData(OFFLINECAT1),data).toString());
+                                    break;
+                                case 2:
+                                    editor.putString(OFFLINECAT2,concatArray(getSharedData(OFFLINECAT2),data).toString());
+                                    break;
+                                case 3:
+                                    editor.putString(OFFLINECAT3,concatArray(getSharedData(OFFLINECAT3),data).toString());
+                                    break;
+                                case 4:
+                                    editor.putString(OFFLINECAT4,concatArray(getSharedData(OFFLINECAT4),data).toString());
+                                    break;
+                                case 5:
+                                    editor.putString(OFFLINECAT5,concatArray(getSharedData(OFFLINECAT5),data).toString());
+                                    break;
+                                default:
+                                    break;
+                            }
+                            editor.commit();
                         }
+
+//                        Toast.makeText(CategoryActivity.this, data.toString(), Toast.LENGTH_LONG).show();
+
 
 //                        Toast.makeText(CategoryActivity.this,holder.size()+" item before", Toast.LENGTH_LONG).show();
                         for(int i =0 ;i<data.length();i++){
@@ -349,7 +382,7 @@ public class CategoryActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Toast.makeText(CategoryActivity.this,"Connection Error.",Toast.LENGTH_LONG).show();
+                    Toast.makeText(CategoryActivity.this,R.string.connection_error_msg,Toast.LENGTH_LONG).show();
                     switch (index){
                         case 1:
                             if(sharedpreferences.contains(OFFLINECAT1)){
@@ -387,7 +420,6 @@ public class CategoryActivity extends AppCompatActivity {
         AppController.getInstance().addToRequestQueue(jsonObjReq);
 
     }
-
     private void getSubCatsDropDownMenu(int index){
         if(sharedpreferences.contains("categories")){
             String jsonString = sharedpreferences.getString("categories",null);
@@ -410,10 +442,12 @@ public class CategoryActivity extends AppCompatActivity {
         }
     }
     private void populateData(String dataString) {
+
         JSONObject jsonObject1 = null;
         try {
             jsonObject1 = new JSONObject(dataString);
-            JSONArray data = jsonObject1.getJSONArray("data");
+//            JSONArray data = jsonObject1.getJSONArray("data");
+            JSONArray data = new JSONArray(dataString);
             adapter.clear();
             for(int i =0 ;i<data.length();i++) {
                 adapter.add(new Place(data.getJSONObject(i)));
@@ -423,7 +457,30 @@ public class CategoryActivity extends AppCompatActivity {
             e1.printStackTrace();
         }
     }
-
+    private JSONArray getSharedData(String dataStringTag){
+        String dataString ;
+        JSONArray data = null;
+        if(sharedpreferences.contains(dataStringTag)){
+            dataString =  sharedpreferences.getString(OFFLINECAT1,null);
+            try {
+                data = new JSONArray(dataString);
+//                data.put(0,"SSS");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return data;
+    }
+    private JSONArray concatArray(JSONArray... arrs)
+            throws JSONException {
+        JSONArray result = new JSONArray();
+        for (JSONArray arr : arrs) {
+            for (int i = 0; i < arr.length(); i++) {
+                result.put(arr.get(i));
+            }
+        }
+        return result;
+    }
     private void showpDialog() {
         if (!pDialog.isShowing())
             pDialog.show();

@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +33,8 @@ public class SlideshowDialogFragment extends DialogFragment {
     private MyViewPagerAdapter myViewPagerAdapter;
     private TextView lblCount, lblTitle, lblDate;
     private int selectedPosition = 0;
+    private LinearLayout dotsLayout;
+    private TextView[] dots;
 
     static SlideshowDialogFragment newInstance() {
         SlideshowDialogFragment f = new SlideshowDialogFragment();
@@ -44,6 +48,7 @@ public class SlideshowDialogFragment extends DialogFragment {
         viewPager = (ViewPager) v.findViewById(R.id.viewpager);
         lblCount = (TextView) v.findViewById(R.id.lbl_count);
         lblTitle = (TextView) v.findViewById(R.id.title);
+        dotsLayout = (LinearLayout) v.findViewById(R.id.layoutDots);
 //        lblDate = (TextView) v.findViewById(R.id.date);
 
         images = (ArrayList<Image>) getArguments().getSerializable("images");
@@ -57,13 +62,15 @@ public class SlideshowDialogFragment extends DialogFragment {
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
         setCurrentItem(selectedPosition);
-
+        addBottomDots(selectedPosition);
         return v;
     }
 
     private void setCurrentItem(int position) {
         viewPager.setCurrentItem(position, false);
         displayMetaInfo(selectedPosition);
+        addBottomDots(position);
+
     }
 
     //  page change listener
@@ -72,6 +79,7 @@ public class SlideshowDialogFragment extends DialogFragment {
         @Override
         public void onPageSelected(int position) {
             displayMetaInfo(position);
+            addBottomDots(position);
         }
 
         @Override
@@ -97,6 +105,7 @@ public class SlideshowDialogFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Black_NoTitleBar_Fullscreen);
+
     }
 
     //  adapter
@@ -143,5 +152,24 @@ public class SlideshowDialogFragment extends DialogFragment {
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((View) object);
         }
+    }
+
+    private void addBottomDots(int currentPage) {
+        dots = new TextView[images.size()];
+
+        int[] colorsActive = getResources().getIntArray(R.array.array_dot_active);
+        int[] colorsInactive = getResources().getIntArray(R.array.array_dot_inactive);
+
+        dotsLayout.removeAllViews();
+        for (int i = 0; i < dots.length; i++) {
+            dots[i] = new TextView(getActivity());
+            dots[i].setText(Html.fromHtml("&#8226;"));
+            dots[i].setTextSize(35);
+            dots[i].setTextColor(getResources().getColor(R.color.dot_light_screen3));
+            dotsLayout.addView(dots[i]);
+        }
+
+        if (dots.length > 0)
+            dots[currentPage].setTextColor(getResources().getColor(R.color.dot_dark_screen3));
     }
 }
