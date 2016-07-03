@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
@@ -63,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     public static final String MyPREFERENCES = "MyPrefs";
 
+    MediaPlayer mMediaPlayer ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.app_name);
         setSupportActionBar(toolbar);
+
+        mMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.ingtone_pop);
 
         s1 = (Spinner) findViewById(R.id.spinner);
         search_input = (EditText) findViewById(R.id.etsearch);
@@ -108,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
         Image_btn_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
 
                 Intent i = new Intent(MainActivity.this, FavorivtesActivity.class);
                 i.putExtra("type", 1);
@@ -117,6 +123,7 @@ public class MainActivity extends AppCompatActivity {
         Image_btn_offer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
 
 //                    Toast.makeText(MainActivity.this,"Offers", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity.this, SectorActivity.class);
@@ -128,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         Image_btn_job.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
 
 //                    Toast.makeText(MainActivity.this,"JOBS", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity.this, SectorActivity.class);
@@ -138,6 +146,8 @@ public class MainActivity extends AppCompatActivity {
         Image_btn_course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
 //                Toast.makeText(MainActivity.this,"Courses", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity.this, SectorActivity.class);
                 i.putExtra("type", 4);
@@ -148,6 +158,8 @@ public class MainActivity extends AppCompatActivity {
         btn_cat_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
                 Intent i = new Intent(MainActivity.this, CategoryActivity.class);
                 i.putExtra("cat_index", 1);
                 startActivity(i);
@@ -156,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
         btn_cat_1_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
                 Intent i = new Intent(MainActivity.this, CategoryActivity.class);
                 i.putExtra("cat_index", 11);
                 startActivity(i);
@@ -172,6 +186,8 @@ public class MainActivity extends AppCompatActivity {
         btn_cat_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
                 Intent i = new Intent(MainActivity.this, CategoryActivity.class);
                 i.putExtra("cat_index", 3);
                 startActivity(i);
@@ -180,6 +196,8 @@ public class MainActivity extends AppCompatActivity {
         btn_cat_4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
                 Intent i = new Intent(MainActivity.this, CategoryActivity.class);
                 i.putExtra("cat_index", 4);
                 startActivity(i);
@@ -188,6 +206,8 @@ public class MainActivity extends AppCompatActivity {
         btn_cat_5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
                 Intent i = new Intent(MainActivity.this, CategoryActivity.class);
                 i.putExtra("cat_index", 5);
                 startActivity(i);
@@ -199,6 +219,8 @@ public class MainActivity extends AppCompatActivity {
                 // If the event is a key-down event on the "enter" button
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    mMediaPlayer.start();
+
                     // Perform action on key press
                     prepareSearchQuery();
 
@@ -211,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
         Image_btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
                 prepareSearchQuery();
             }
         });
@@ -402,9 +425,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
+        mMediaPlayer.start();
 //        boolean ico = item.getIcon().equals(R.drawable.abc_btn_rating_star_on_mtrl_alpha );
         switch (id){
             case R.id.action_contactUs:
+
                 final AlertDialog aboutDialog = new AlertDialog.Builder(this).create();
                 aboutDialog.setTitle(R.string.app_name);
                 aboutDialog.setMessage("(الزقازيق على موبايك)  \n" +
@@ -418,6 +443,7 @@ public class MainActivity extends AppCompatActivity {
                 aboutDialog.setButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) { // here you can add a method  to the button clicked. you can create another button just by copying alertDialog.setButton("okay")
                         aboutDialog.dismiss();
+                        mMediaPlayer.start();
                     }
 
                 });

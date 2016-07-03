@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.webcraft.ZagazigApp.R;
 import com.webcraft.ZagazigApp.RecyclerItemClickListener;
@@ -45,12 +47,12 @@ public class CategoryActivity extends AppCompatActivity {
     Spinner sp_areas , sp_tags;
     ProgressDialog pDialog ;
     private static String TAG = CategoryActivity.class.getSimpleName();
+
     RecyclerView recyclerView ;
     SearchResultAdapter adapter ;
     RecyclerView.LayoutManager layoutManager ;
     ArrayList<Place> list = new ArrayList<>();
     ArrayList<Place>holder = new ArrayList<>();
-
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     String URL ,area,sub_cat;
@@ -72,7 +74,7 @@ public class CategoryActivity extends AppCompatActivity {
     ArrayAdapter<String> tagsAdapter ;
     String URL_NEXT_PAGE ="";
     String URL_PREV_PAGE ="";
-
+    MediaPlayer mMediaPlayer ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +82,8 @@ public class CategoryActivity extends AppCompatActivity {
 
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+         mMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.ingtone_pop);
 
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
@@ -110,7 +114,7 @@ public class CategoryActivity extends AppCompatActivity {
                 getSubCatsDropDownMenu(1);
                 break;
             case 2:
-                getSupportActionBar().setTitle("أناقة");
+                getSupportActionBar().setTitle("مشتريات");
                 getSupportActionBar().setIcon(R.mipmap.cat_anaka);
                 getSubCatsDropDownMenu(2);
                 break;
@@ -143,8 +147,6 @@ public class CategoryActivity extends AppCompatActivity {
                 (android.R.layout.simple_spinner_dropdown_item);
         dataAdapter.setDropDownViewResource
                 (android.R.layout.simple_spinner_dropdown_item);
-
-
 
         sp_areas = (Spinner) findViewById(R.id.sp_aresa);
         sp_areas.setAdapter(dataAdapter);
@@ -217,6 +219,7 @@ public class CategoryActivity extends AppCompatActivity {
                         Intent i = new Intent(CategoryActivity.this, DetailedItemActivity.class);
                         i.putExtra("Item",adapter.getItem(position).getObject().toString());
                         startActivity(i);
+                        mMediaPlayer.start();
                     }
 
                 })
@@ -263,7 +266,7 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void makeJsonObjectRequest(String url,final boolean clear) {
-//        Toast.makeText(CategoryActivity.this,url, Toast.LENGTH_LONG).show();
+        Toast.makeText(CategoryActivity.this,url, Toast.LENGTH_LONG).show();
 
         if(!mSwipeRefreshLayout.isRefreshing()){
             showpDialog();
@@ -317,10 +320,17 @@ public class CategoryActivity extends AppCompatActivity {
                                     //make method to append
 //                                    getSharedData(OFFLINECAT1);
 //                                    concatArray(getSharedData(OFFLINECAT1),data);
-                                    editor.putString(OFFLINECAT1,concatArray(getSharedData(OFFLINECAT1),data).toString());
+                                    JSONArray array = concatArray(getSharedData(OFFLINECAT1),data);
+                                    editor.putString(OFFLINECAT1,array.toString());
                                     break;
                                 case 2:
-                                    editor.putString(OFFLINECAT2,concatArray(getSharedData(OFFLINECAT2),data).toString());
+                                    if(getSharedData(OFFLINECAT2)==null){
+                                        Toast.makeText(CategoryActivity.this, "shared data null", Toast.LENGTH_SHORT).show();
+                                    }else {
+
+                                        JSONArray array1 = concatArray(getSharedData(OFFLINECAT2),data);
+                                        editor.putString(OFFLINECAT2,array1.toString());
+                                    }
                                     break;
                                 case 3:
                                     editor.putString(OFFLINECAT3,concatArray(getSharedData(OFFLINECAT3),data).toString());
@@ -359,7 +369,7 @@ public class CategoryActivity extends AppCompatActivity {
                                 "Something went wrong..!", Toast.LENGTH_SHORT).show();
                     }
 
-                } catch (JSONException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -445,29 +455,34 @@ public class CategoryActivity extends AppCompatActivity {
 
         JSONObject jsonObject1 = null;
         try {
-            jsonObject1 = new JSONObject(dataString);
+//            jsonObject1 = new JSONObject(dataString);
 //            JSONArray data = jsonObject1.getJSONArray("data");
             JSONArray data = new JSONArray(dataString);
             adapter.clear();
             for(int i =0 ;i<data.length();i++) {
                 adapter.add(new Place(data.getJSONObject(i)));
             }
-
         } catch (JSONException e1) {
             e1.printStackTrace();
         }
     }
+
     private JSONArray getSharedData(String dataStringTag){
         String dataString ;
         JSONArray data = null;
         if(sharedpreferences.contains(dataStringTag)){
             dataString =  sharedpreferences.getString(OFFLINECAT1,null);
-            try {
-                data = new JSONArray(dataString);
+            if(dataString!=null){
+                try {
+                    data = new JSONArray(dataString);
 //                data.put(0,"SSS");
-            } catch (JSONException e) {
-                e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }else {
+                Toast.makeText(CategoryActivity.this,"Can't load data from shared", Toast.LENGTH_SHORT).show();
             }
+
         }
         return data;
     }

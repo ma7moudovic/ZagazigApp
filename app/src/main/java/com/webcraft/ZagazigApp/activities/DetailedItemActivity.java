@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
@@ -73,6 +74,8 @@ public class DetailedItemActivity extends AppCompatActivity {
     double latitude , longitude ;
     String fbPageURL ;
     ImageButton imageButtonGallery, imageButtonMenus ;
+    MediaPlayer mMediaPlayer ;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.detailed_menu, menu);
@@ -178,6 +181,8 @@ public class DetailedItemActivity extends AppCompatActivity {
         sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         editor = sharedpreferences.edit();
 
+        mMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.ingtone_pop);
+
         txtView_photos = (TextView) findViewById(R.id.txtView_photos);
         title = (TextView) findViewById(R.id.tvtitle);
         category = (TextView) findViewById(R.id.tvcat);
@@ -274,6 +279,8 @@ public class DetailedItemActivity extends AppCompatActivity {
             @Override
             public void onItemClick(LinearListView linearListView, View view,
                                     int position, long id) {
+                mMediaPlayer.start();
+
                 Intent i = new Intent(DetailedItemActivity.this,PhotoActivity.class);
                 i.putExtra(EXTRA_IMAGE,position);
                 i.putExtra(EXTRA_IMAGES_OBJECTS,place.getObject().toString());
@@ -284,6 +291,7 @@ public class DetailedItemActivity extends AppCompatActivity {
         icon_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
                 if(latitude!=0&&longitude!=0){
                     //?q=<lat>,<long>(Label+Name)
                     String uri = String.format(Locale.ENGLISH, "geo:"+latitude+","+longitude+"?q="+latitude+","+longitude+"(Label+Name)");
@@ -296,12 +304,16 @@ public class DetailedItemActivity extends AppCompatActivity {
         facebookPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
                 startActivity(newFacebookIntent(getPackageManager(),fbPageURL));
             }
         });
         icon_telephone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
                 if(tel.getText()!=""||tel.getText()!=null){
                     call(tel.getText().toString());
                 }
@@ -310,6 +322,8 @@ public class DetailedItemActivity extends AppCompatActivity {
         imageButtonGallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
                 Intent intent = new Intent(DetailedItemActivity.this,GalleryActivity.class);
                 intent.putExtra(EXTRA_IMAGES_OBJECTS,place.getObject().toString());
                 intent.putExtra(EXTRA_IMAGES_FLAG,"GALLERY");
@@ -320,6 +334,8 @@ public class DetailedItemActivity extends AppCompatActivity {
         imageButtonMenus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mMediaPlayer.start();
+
                 Intent intent = new Intent(DetailedItemActivity.this,GalleryActivity.class);
                 intent.putExtra(EXTRA_IMAGES_OBJECTS,place.getObject().toString());
                 intent.putExtra(EXTRA_IMAGES_FLAG,"MENUS");

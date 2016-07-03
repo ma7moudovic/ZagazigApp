@@ -1,9 +1,11 @@
 package com.webcraft.ZagazigApp.activities;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.media.MediaBrowserCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +29,7 @@ public class SearchResultActivity extends AppCompatActivity {
     SearchResultAdapter adapter ;
     RecyclerView.LayoutManager layoutManager ;
     private List<Place> list;
-
+    MediaPlayer mMediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,9 @@ public class SearchResultActivity extends AppCompatActivity {
 
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.ingtone_pop);
+
 
         list= new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerListview_searchResult);
@@ -80,6 +85,8 @@ public class SearchResultActivity extends AppCompatActivity {
                     @Override
                     public void onItemClick(View view, int position) {
 //                        adapter.getItem(position);
+                        mMediaPlayer.start();
+
                         Intent i = new Intent(SearchResultActivity.this,DetailedItemActivity.class);
                         i.putExtra("Item",adapter.getItem(position).getObject().toString());
                         startActivity(i);

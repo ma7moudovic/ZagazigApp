@@ -3,6 +3,7 @@ package com.webcraft.ZagazigApp.activities ;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -36,6 +37,7 @@ public class FavorivtesActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     public static final String MyPREFERENCES = "MyPrefs";
     public static final String FAVORITES = "Product_Favorite";
+    MediaPlayer mMediaPlayer ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class FavorivtesActivity extends AppCompatActivity {
 
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        mMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.ingtone_pop);
 
         list= new ArrayList<>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerListView_favList);
@@ -66,6 +70,8 @@ public class FavorivtesActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View view, int position) {
+                        mMediaPlayer.start();
+
 //                        adapter.getItem(position);
                         Intent i = new Intent(FavorivtesActivity.this, DetailedItemActivity.class);
                         i.putExtra("Item",adapter.getItem(position).getObject().toString());

@@ -195,14 +195,12 @@
                     android:id="@+id/btn_cat_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@mipmap/cat_anaka"
+                    android:background="@drawable/ic_moshriat"
                     android:gravity="center"
                     android:paddingBottom="10dp"
-
                     android:textAlignment="center"
                     android:textSize="20sp"
                     android:textStyle="bold"
-
                     />
 
 

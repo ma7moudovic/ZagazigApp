@@ -1,6 +1,7 @@
 package com.webcraft.ZagazigApp.activities;
 
 import android.app.ProgressDialog;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -43,6 +44,8 @@ public class GalleryActivity extends AppCompatActivity {
     String EXTRA_IMAGES_OBJECTS ="extra_object";
     int position =0 ;
     String FLAG ;
+    MediaPlayer mMediaPlayer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,8 @@ public class GalleryActivity extends AppCompatActivity {
         images = new ArrayList<>();
         mAdapter = new ThumbAdapter(getApplicationContext(), images);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        mMediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.ingtone_pop);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getApplicationContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -104,6 +109,8 @@ public class GalleryActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new ThumbAdapter.RecyclerTouchListener(getApplicationContext(), recyclerView, new ThumbAdapter.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                mMediaPlayer.start();
+
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("images", images);
                 bundle.putInt("position", position);
