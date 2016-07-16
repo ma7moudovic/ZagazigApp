@@ -94,6 +94,7 @@ public class AnnonuceAdapter  extends RecyclerView.Adapter<AnnonuceAdapter.ViewH
 //        Picasso.with(getpContext()).load("http://mashaly.net/"+pObjects.get(position).getIconURL()).into(holder.imageView);
 //        ImageHandler(pObjects.get(position).getIconURL(),holder.imageView);
 
+
         if (!Glide.isSetup()) {
             GlideBuilder gb = new GlideBuilder(getpContext());
             DiskCache dlw = DiskLruCacheWrapper.get(new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/myCatch/"), 250 * 1024 * 1024);
